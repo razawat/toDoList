@@ -2,6 +2,7 @@
 
 
 export default function TaskDetail({ taskList }) {
+    console.log("In task list");
   return (
     <>
       {taskList.map((val, i) => (

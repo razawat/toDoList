@@ -1,5 +1,24 @@
-// eslint-disable-next-line react/prop-types
-export default function Input({ labelName, inputType, id }) {
+/* eslint-disable react/prop-types */
+// import { forwardRef } from "react";
+
+export default function Input({
+  labelName,
+  inputType,
+  id,
+  onInputChange,
+  inputValue,
+  onSubmit,
+}) {
+  let inputClass = "p-2 w-full shadow-md rounded-xl";
+  let inputError = onSubmit && (inputValue == null || inputValue === "");
+
+  if (inputError) {
+    inputClass += "border-red-600 border-2";
+  }
+  function handleInputChange(value) {
+    onInputChange(id, value);
+  }
+
   return (
     <>
       <div>
@@ -11,9 +30,19 @@ export default function Input({ labelName, inputType, id }) {
         <input
           type={inputType}
           id={id}
-          className="p-2 w-full shadow-md rounded-xl"
+          className={inputClass}
+          name={id}
+          onChange={(e) => handleInputChange(e.target.value)}
+          value={inputValue}
         />
       </div>
+      {inputError && (
+        <div>
+          <span className="text-xs text-red-700 font-bold">
+            {labelName} is required.
+          </span>
+        </div>
+      )}
     </>
   );
 }

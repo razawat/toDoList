@@ -1,6 +1,25 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-export default function DropDown({ labelName, id, options }) {
+export default function DropDown({
+  labelName,
+  id,
+  options,
+  onInputChange,
+  inputValue,
+  onSubmit,
+}) {
+  let inputClass = "p-2 w-full shadow-md rounded-xl";
+  const inputError = onSubmit && (inputValue == null || inputValue === "");
+
+  if (inputError) {
+    inputClass += "border-red-600 border-2";
+  }
+
+  function handleInputChange(value) {
+    onInputChange(id, value);
+  }
+
   return (
     <>
       <div>
@@ -9,8 +28,16 @@ export default function DropDown({ labelName, id, options }) {
         </label>
       </div>
       <div>
-        <select id={id} className="p-2 w-full shadow-md rounded-xl">
-            <option value="" disabled selected>Select a option</option>
+        <select
+          id={id}
+          className={inputClass}
+          name={id}
+          onChange={(e) => handleInputChange(e.target.value)}
+          value={inputValue}
+        >
+          <option value="" hidden>
+            Select a option
+          </option>
           {options.map((val, i) => (
             <option key={i} value={val}>
               {val}
@@ -18,6 +45,13 @@ export default function DropDown({ labelName, id, options }) {
           ))}
         </select>
       </div>
+      {inputError && (
+        <div>
+          <span className="text-xs text-red-700 font-bold">
+            {labelName} is required.
+          </span>
+        </div>
+      )}
     </>
   );
 }
