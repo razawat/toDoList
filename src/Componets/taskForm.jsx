@@ -5,13 +5,20 @@ import { categories } from "../Util/const";
 // import { useRef } from "react";
 import { useState } from "react";
 
-export default function TaskForm({ getFormData }) {
+const formObj = {
+  desc: "",
+  category: "",
+  date: "",
+  checked: false,
+};
+
+export default function TaskForm({
+  getFormData,
+  showDeleteButton,
+  deleteTask,
+}) {
   console.log("In task form");
-  const [taskForm, updateTaskForm] = useState({
-    desc: "",
-    category: "",
-    date: "",
-  });
+  const [taskForm, updateTaskForm] = useState(formObj);
 
   const [submitStatus, updateSubmitStatus] = useState(false);
 
@@ -34,8 +41,12 @@ export default function TaskForm({ getFormData }) {
     ) {
       getFormData(taskForm);
       updateSubmitStatus(false);
-      updateTaskForm(() => ({ desc: "", category: "", date: "" }));
+      updateTaskForm(formObj);
     }
+  }
+
+  function handleDeleteButton() {
+    deleteTask();
   }
 
   return (
@@ -81,12 +92,15 @@ export default function TaskForm({ getFormData }) {
             >
               + Add Task
             </button>
-            <button
-              type="button"
-              className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-900"
-            >
-              Delete Task
-            </button>
+            {showDeleteButton && (
+              <button
+                type="button"
+                className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-900"
+                onClick={handleDeleteButton}
+              >
+                Delete Task
+              </button>
+            )}
           </div>
         </div>
       </form>

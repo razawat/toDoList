@@ -11,9 +11,34 @@ import { useState } from "react";
 
 function App() {
   const [tasks, updateTask] = useState([]);
+  const [deleteButton, updateDeleteButton] = useState(false);
 
   function handleFormData(data) {
     updateTask((prev) => [...prev, data]);
+  }
+
+  function handleChecking(value, index) {
+    console.log(value, index, tasks);
+    updateTask((prev) => {
+      const currentTaskList = [...prev];
+      currentTaskList[index] = { ...currentTaskList[index], checked: value };
+
+      updateDeleteButton(() =>
+        currentTaskList.some((val) => val?.checked && val.checked === true)
+      );
+      return currentTaskList;
+    });
+  }
+
+  function handleTaskDeletion() {
+    updateTask((prev) => {
+      const updatedTaskList = prev.filter((val) => !val?.checked);
+      console.log(updatedTaskList);
+      if(updatedTaskList.length == 0) {
+        updateDeleteButton(false);
+      }
+      return updatedTaskList;
+    })
   }
 
   return (
@@ -22,8 +47,12 @@ function App() {
         <h1 className="text-center text-xl font-semibold"> TODO App</h1>
       </header>
       <section>
-        <TaskForm getFormData={handleFormData} />
-        <TaskDetail taskList={tasks} />
+        <TaskForm
+          getFormData={handleFormData}
+          showDeleteButton={deleteButton}
+          deleteTask={handleTaskDeletion}
+        />
+        <TaskDetail taskList={tasks} taskCheckedStatus={handleChecking} />
       </section>
     </main>
   );

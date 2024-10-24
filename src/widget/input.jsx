@@ -10,7 +10,7 @@ export default function Input({
   onSubmit,
 }) {
   let inputClass = "p-2 w-full shadow-md rounded-xl";
-  let inputError = onSubmit && (inputValue == null || inputValue === "");
+  let inputError = onSubmit && (inputValue == null || inputValue.trim().length === 0);
 
   if (inputError) {
     inputClass += "border-red-600 border-2";
