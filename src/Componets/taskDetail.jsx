@@ -4,6 +4,11 @@ export default function TaskDetail({ taskDetails, taskCheckedStatus }) {
   console.log("In task list", taskDetails);
 
   let categoryBgColor = "bg-amber-500";
+  const taskDate = new Date(taskDetails.date).toLocaleDateString('en-GB', {
+    day:"2-digit",
+    month:"short",
+    year:"numeric",
+  }).replace(/ /g, '-');
 
   if (taskDetails.category.id == 2) {
     categoryBgColor = "bg-green-500";
@@ -66,7 +71,7 @@ export default function TaskDetail({ taskDetails, taskCheckedStatus }) {
           <p
             className={`text-sm ${taskDetails?.checked ? "line-through" : ""}`}
           >
-            {taskDetails.date}
+            {taskDate}
           </p>
         </div>
         <div className="3/12">
