@@ -10,7 +10,7 @@ export default function DropDown({
   onSubmit,
 }) {
   let inputClass = "p-2 w-full shadow-md rounded-xl";
-  const inputError = onSubmit && (inputValue == null || inputValue === "");
+  const inputError = onSubmit && (inputValue.label == null || inputValue.label === "");
 
   if (inputError) {
     inputClass += "border-red-600 border-2";
@@ -33,14 +33,14 @@ export default function DropDown({
           className={inputClass}
           name={id}
           onChange={(e) => handleInputChange(e.target.value)}
-          value={inputValue}
+          value={inputValue?.id}
         >
           <option value="" hidden>
             Select a option
           </option>
           {options.map((val, i) => (
-            <option key={i} value={val}>
-              {val}
+            <option key={i} value={val?.id}>
+              {val?.label}
             </option>
           ))}
         </select>

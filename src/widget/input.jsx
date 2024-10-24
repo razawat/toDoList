@@ -10,7 +10,8 @@ export default function Input({
   onSubmit,
 }) {
   let inputClass = "p-2 w-full shadow-md rounded-xl";
-  let inputError = onSubmit && (inputValue == null || inputValue.trim().length === 0);
+  let inputError =
+    onSubmit && (inputValue == null || inputValue.trim().length === 0);
 
   if (inputError) {
     inputClass += "border-red-600 border-2";
@@ -34,6 +35,7 @@ export default function Input({
           name={id}
           onChange={(e) => handleInputChange(e.target.value)}
           value={inputValue}
+          placeholder={id == "desc" ? "Enter your description..." : ""}
         />
       </div>
       {inputError && (

@@ -17,7 +17,7 @@ function App() {
     updateTask((prev) => [...prev, data]);
   }
 
-  function handleChecking(value, index) {
+  function handleChecking(index,value) {
     console.log(value, index, tasks);
     updateTask((prev) => {
       const currentTaskList = [...prev];
@@ -52,7 +52,8 @@ function App() {
           showDeleteButton={deleteButton}
           deleteTask={handleTaskDeletion}
         />
-        <TaskDetail taskList={tasks} taskCheckedStatus={handleChecking} />
+        {tasks.map((val,i) => <TaskDetail key={i} taskDetails={val} taskCheckedStatus={(value) => handleChecking(i,value)} />)}
+        {/* <TaskDetail taskList={tasks} taskCheckedStatus={handleChecking} /> */}
       </section>
     </main>
   );

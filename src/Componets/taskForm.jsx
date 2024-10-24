@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const formObj = {
   desc: "",
-  category: "",
+  category: {label:'',id:''},
   date: "",
   checked: false,
 };
@@ -23,8 +23,15 @@ export default function TaskForm({
   const [submitStatus, updateSubmitStatus] = useState(false);
 
   function handleInputChange(key, value) {
-    console.log("on change: ", key, value);
-    updateTaskForm((prev) => ({ ...prev, [key]: value }));
+    console.log("on change: ", key, value, taskForm);
+    if (key === "category") {
+      updateTaskForm((prev) => ({
+        ...prev,
+        [key]: categories.find((val) => val.id == value),
+      }));
+    } else {
+      updateTaskForm((prev) => ({ ...prev, [key]: value }));
+    }
   }
 
   function handleSubmitButton(e) {
@@ -35,7 +42,7 @@ export default function TaskForm({
       taskForm?.desc != null &&
       taskForm.desc.trim().length != 0 &&
       taskForm?.category != null &&
-      taskForm.category !== "" &&
+      taskForm.category.label !== "" &&
       taskForm.date !== null &&
       taskForm.date !== ""
     ) {
